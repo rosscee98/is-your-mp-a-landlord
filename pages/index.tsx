@@ -20,7 +20,7 @@ const Home: NextPage = () => {
       .then((body) => body.value);
 
     const propertyInterestsOverview = interests
-      .find((i) => i.name === '6. Land and property portfolio: (i) value over £100,000 and/or (ii) giving rental income of over £10,000 a year');
+      .find((i: any) => i.name === '6. Land and property portfolio: (i) value over £100,000 and/or (ii) giving rental income of over £10,000 a year');
 
     const propertyInterests = propertyInterestsOverview?.interests;
 
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
       return;
     }
 
-    const isLandlord = propertyInterests.some((entry) => {
+    const isLandlord = propertyInterests.some((entry: any) => {
       const desc = entry.interest;
       return desc.includes("(ii)");
     });
