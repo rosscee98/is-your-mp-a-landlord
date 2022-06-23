@@ -66,16 +66,25 @@ const Home: NextPage = () => {
         </h1>
         <br />
         <p className="mt-3 text-2xl">Enter your MP&apos;s name to find out:</p>
-        <input
-          className="border rounded py-2 px-3 mt-5 w-full text-center"
-          onChange={(event) => setName(event.target.value)}
-        />
-        <button
-          className="bg-blue-500 text-white rounded py-2 px-3 mt-5"
-          onClick={runLandlordCheck}
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            await runLandlordCheck();
+          }}
         >
-          Submit
-        </button>
+          <input
+            className="border rounded py-2 px-3 mt-5 w-full text-center"
+            type="text"
+            name="name"
+            onChange={(event) => setName(event.target.value)}
+          />
+          <button
+            className="bg-blue-500 text-white rounded py-2 px-3 mt-5"
+            type="submit"
+          >
+            Submit
+          </button>
+        </form>
       </main>
 
       <footer className="flex h-12 text-sm w-full items-center justify-center border-t">

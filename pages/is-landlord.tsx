@@ -1,9 +1,11 @@
 import type { NextPage } from "next";
+import BackButton from "../components/back-button";
 
 const IsLandlord: NextPage = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2 bg-red-500">
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
+        <BackButton />
         <h1 className="text-6xl font-bold text-white">
           Your MP is a landlord.
         </h1>

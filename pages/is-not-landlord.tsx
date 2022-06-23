@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { withRouter } from "next/router";
+import BackButton from "../components/back-button";
 
 type Props = {
   router?: {
@@ -15,6 +15,7 @@ const IsNotLandlord: NextPage = (props: Props) => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2 bg-green-500">
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
+        <BackButton />
         <h1 className="text-6xl font-bold text-white">Not a landlord!</h1>
         <br />
         {property === "true" ? (
@@ -32,4 +33,4 @@ const IsNotLandlord: NextPage = (props: Props) => {
   );
 };
 
-export default withRouter(IsNotLandlord);
+export default IsNotLandlord;
