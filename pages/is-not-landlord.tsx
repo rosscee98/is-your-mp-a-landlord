@@ -1,9 +1,16 @@
 import type { NextPage } from "next";
 import { withRouter } from "next/router";
-import { useEffect, useState } from "react";
 
-const IsNotLandlord: NextPage = (props) => {
-  const { property } = props?.router?.query;
+type Props = {
+  router?: {
+    query: {
+      property: string;
+    };
+  };
+};
+
+const IsNotLandlord: NextPage = (props: Props) => {
+  const property = props?.router?.query?.property;
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2 bg-green-500">
