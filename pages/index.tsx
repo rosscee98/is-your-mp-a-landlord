@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import getConstituencies from "../public/get-constituencies.js";
+import DisclosureBox from "../components/disclosure-box";
 
 const constituencies = getConstituencies();
 const PARLIAMENT_URL = "https://members-api.parliament.uk/api";
@@ -152,6 +153,7 @@ const Home: NextPage = () => {
             </button>
           </div>
         </form>
+        <DisclosureBox />
       </main>
 
       <footer className="flex h-12 text-sm w-full items-center justify-center border-t">

@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import BackButton from "../components/back-button";
+import DisclosureBox from "../components/disclosure-box";
 
 type Props = {
   router?: {
@@ -28,6 +29,7 @@ const IsNotLandlord: NextPage = (props: Props) => {
             Your MP has declared no property interests.
           </p>
         )}
+        <DisclosureBox />
       </main>
 
       <footer className="flex h-12 text-sm w-full items-center justify-center">

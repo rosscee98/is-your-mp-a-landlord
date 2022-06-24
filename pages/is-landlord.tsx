@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import BackButton from "../components/back-button";
+import DisclosureBox from "../components/disclosure-box";
 
 const IsLandlord: NextPage = () => {
   return (
@@ -14,6 +15,7 @@ const IsLandlord: NextPage = () => {
           According to the Register of Members&apos; Financial Interests, your
           MP makes £10,000 or more per year from rental income.
         </p>
+        <DisclosureBox />
       </main>
 
       <footer className="flex h-12 text-sm w-full items-center justify-center">
