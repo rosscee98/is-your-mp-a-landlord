@@ -19,7 +19,7 @@ const IsLandlord: NextPage = () => {
       </main>
 
       <footer className="flex h-12 text-sm w-full items-center justify-center">
-        Created by Ross Clark.
+        Created by Ross Clark :)
       </footer>
     </div>
   );

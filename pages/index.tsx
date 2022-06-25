@@ -77,6 +77,7 @@ const Home: NextPage = () => {
     setIsLoading(true);
     if (constituencies.indexOf(constituencyNameInput) === -1) {
       setIsError(true);
+      setIsLoading(false);
       return false;
     }
     await runLandlordCheck();
@@ -111,7 +112,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-1 flex-col items-center justify-center px-20 text-center">
+      <main className="flex flex-1 flex-col items-center justify-center px-20 text-center md:w-9/12">
         <h1 className="text-6xl font-bold">
           Is your MP a <span className="text-red-500">private landlord</span>?
         </h1>
@@ -157,7 +158,7 @@ const Home: NextPage = () => {
       </main>
 
       <footer className="flex h-12 text-sm w-full items-center justify-center border-t">
-        Created by Ross Clark.
+        Created by Ross Clark :)
       </footer>
     </div>
   );
