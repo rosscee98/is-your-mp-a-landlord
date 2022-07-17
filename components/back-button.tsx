@@ -1,13 +1,15 @@
-import { useRouter } from "next/router";
 import { ChevronLeftIcon } from "@heroicons/react/solid";
+import { Dispatch, SetStateAction } from "react";
 
-const BackButton = () => {
-  const router = useRouter();
+interface Props {
+  setShowSearch: Dispatch<SetStateAction<boolean>>;
+}
 
+const BackButton = ({ setShowSearch }: Props) => {
   return (
     <button
       className="absolute top-0 left-0 flex items-center text-white p-3"
-      onClick={() => router.back()}
+      onClick={() => setShowSearch(true)}
     >
       <ChevronLeftIcon className="h-6 w-6" />
       Back
