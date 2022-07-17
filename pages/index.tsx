@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import getConstituencies from "../public/get-constituencies.js";
 import DisclosureBox from "../components/disclosure-box";
 import SearchView from "../components/search-view";
@@ -10,6 +10,7 @@ import IsNotLandlordView from "../components/is-not-landlord-view";
 import Spinner from "../components/spinner";
 
 const constituencies = getConstituencies();
+const lowercaseConstituencies = constituencies.map((c) => c.toLowerCase());
 const PARLIAMENT_URL = "https://members-api.parliament.uk/api";
 
 const Home: NextPage = () => {
@@ -67,7 +68,7 @@ const Home: NextPage = () => {
 
   const handleUserSubmit = async () => {
     setIsLoading(true);
-    if (constituencies.indexOf(constituencyNameInput) === -1) {
+    if (lowercaseConstituencies.indexOf(constituencyNameInput) === -1) {
       setIsError(true);
       setIsLoading(false);
       return false;
