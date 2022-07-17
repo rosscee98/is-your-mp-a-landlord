@@ -95,12 +95,25 @@ const Home: NextPage = () => {
       <main className="flex flex-1 flex-col items-center justify-center px-20 text-center md:w-9/12">
         {!showSearch && <BackButton setShowSearch={setShowSearch} />}
         {showSearch && (
-          <SearchView
-            handleUserSubmit={handleUserSubmit}
-            handleUserInput={handleUserInput}
-            isError={isError}
-            constituencyNameSuggestions={constituencyNameSuggestions}
-          />
+          <>
+            <SearchView
+              handleUserSubmit={handleUserSubmit}
+              handleUserInput={handleUserInput}
+              isError={isError}
+              constituencyNameSuggestions={constituencyNameSuggestions}
+            />
+            <p className="mt-2">
+              Not sure what constituency you&apos;re in? Check on the{" "}
+              <a
+                href="https://members.parliament.uk/constituencies"
+                target="_blank"
+                className="text-blue-500 underline"
+                rel="noreferrer"
+              >
+                official Parliament website.
+              </a>
+            </p>
+          </>
         )}
         {!showSearch && isLandlord && <IsLandlordView />}
         {!showSearch && !isLandlord && <IsNotLandlordView />}
