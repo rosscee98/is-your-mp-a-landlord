@@ -1,8 +1,27 @@
 import { Button, Input, Text } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+
+async function fetchData(input: string) {
+  console.log("fetching!");
+  return input;
+}
 
 export default function App() {
   const [input, setInput] = useState("");
+
+  const { isInitialLoading, isError, error, data, refetch } = useQuery<
+    string,
+    Error
+  >({
+    queryKey: [input],
+    queryFn: () => fetchData(input),
+    enabled: false,
+  });
+
+  if (isInitialLoading) return <Text>Loading...</Text>;
+
+  if (isError) return <Text>An error occurred: {error.message}</Text>;
 
   return (
     <>
@@ -13,8 +32,8 @@ export default function App() {
         onChange={({ target: { value } }) => setInput(value)}
         placeholder="SW1A 1AA"
       />
-      <Button>Submit</Button>
-      <Text>{input}</Text>
+      <Button onClick={() => refetch()}>Submit</Button>
+      <Text>{data}</Text>
     </>
   );
 }
