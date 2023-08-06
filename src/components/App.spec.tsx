@@ -2,11 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { vi } from "vitest";
-
-vi.mock("../utils/getMember", () => ({
-  default: vi.fn((value: string) => Promise.resolve(value)),
-}));
+import { mockName, mockValidPostcode } from "../mocks/data";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,38 +30,31 @@ function setup() {
   };
 }
 
-it("Submit button click renders value on screen", async () => {
+it("Submit button click renders name on screen", async () => {
   const { user, input, submitButton } = setup();
 
   await user.click(input);
-  await user.keyboard("Hello world");
+  await user.keyboard(mockValidPostcode);
   await user.click(submitButton);
-  expect(screen.getByRole("heading", { name: /^hello world$/i })).toBeVisible();
+  await screen.findByRole("heading", {
+    name: new RegExp(`^${mockName}$`, "i"),
+  });
 });
 
-it("Enter event on input renders value on screen", async () => {
+it("Enter event on input renders name on screen", async () => {
   const { user, input } = setup();
 
   await user.click(input);
-  await user.keyboard("Hello world{Enter}");
-  expect(screen.getByRole("heading", { name: /^hello world$/i })).toBeVisible();
+  await user.keyboard(`${mockValidPostcode}{Enter}`);
+  await screen.findByRole("heading", {
+    name: new RegExp(`^${mockName}$`, "i"),
+  });
 });
 
-it("Rendered value only changes on submit event", async () => {
-  const { user, input, submitButton } = setup();
+it("Invalid postcode value renders error message on screen", async () => {
+  const { user, input } = setup();
 
   await user.click(input);
-  await user.keyboard("Hello world{Enter}");
-  expect(screen.getByRole("heading", { name: /^hello world$/i })).toBeVisible();
-
-  // No change on further input
-  await user.click(input);
-  await user.keyboard("123");
-  expect(screen.getByRole("heading", { name: /^hello world$/i })).toBeVisible();
-
-  // Change on submission
-  await user.click(submitButton);
-  expect(
-    screen.getByRole("heading", { name: /^hello world123$/i })
-  ).toBeVisible();
+  await user.keyboard("Invalid input{Enter}");
+  await screen.findByRole("heading", { name: /Invalid postcode/i });
 });

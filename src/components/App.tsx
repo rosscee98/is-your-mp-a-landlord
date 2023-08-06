@@ -19,8 +19,6 @@ export default function App() {
 
   if (isInitialLoading) return <Text>Loading...</Text>;
 
-  if (isError) return <Text>An error occurred: {error.message}</Text>;
-
   return (
     <>
       <Text>Is your MP a private landlord?</Text>
@@ -34,7 +32,8 @@ export default function App() {
         placeholder="SW1A 1AA"
       />
       <Button onClick={() => handleSubmit()}>Submit</Button>
-      <Heading>{data}</Heading>
+      {data?.nameDisplayAs ? <Heading>{data.nameDisplayAs}</Heading> : null}
+      {isError ? <Heading>Invalid postcode</Heading> : null}
     </>
   );
 }
