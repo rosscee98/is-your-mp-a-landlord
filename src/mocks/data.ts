@@ -1,5 +1,4 @@
-export const mockName = "Jeremy Corbyn";
-export const mockValidPostcode = "SW1A 1AA";
+export const mockName = "Mike Gapes";
 
 export const mockMemberResponse = {
   items: [
