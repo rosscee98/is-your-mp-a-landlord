@@ -1,4 +1,4 @@
-export default async function getMember(postcode: string) {
+export default async function getMemberId(postcode: string): Promise<number> {
   const endpoint = new URL(
     "https://members-api.parliament.uk/api/Location/Constituency/Search"
   );
@@ -6,5 +6,5 @@ export default async function getMember(postcode: string) {
 
   return await fetch(endpoint)
     .then((res) => res.json())
-    .then((body) => body.items[0].value.currentRepresentation.member.value);
+    .then((body) => body.items[0].value.currentRepresentation.member.value.id);
 }
