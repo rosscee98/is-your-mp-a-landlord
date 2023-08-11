@@ -31,17 +31,17 @@ function setup() {
   };
 }
 
-it("submitting postcode for constituency with landlord member renders landlord message", async () => {
+it("submitting postcode with landlord member renders landlord message", async () => {
   const { user, input } = setup();
 
   await user.click(input);
-  await user.keyboard("postcode{Enter}");
+  await user.keyboard("SW1A1AA{Enter}");
   expect(
     await screen.findByRole("heading", { name: /^mike gapes is a landlord$/i })
   ).toBeVisible();
 });
 
-it("submitting postcode for constituency with non-landlord member renders non-landlord message", async () => {
+it("submitting postcode with non-landlord member renders non-landlord message", async () => {
   const { user, input } = setup();
   server.use(
     rest.get(
@@ -51,7 +51,7 @@ it("submitting postcode for constituency with non-landlord member renders non-la
   );
 
   await user.click(input);
-  await user.keyboard("postcode{Enter}");
+  await user.keyboard("SW1A1AA{Enter}");
   expect(
     await screen.findByRole("heading", {
       name: /^mike gapes is not a landlord$/i,
@@ -59,7 +59,7 @@ it("submitting postcode for constituency with non-landlord member renders non-la
   ).toBeVisible();
 });
 
-it("constituency search error response renders error message on screen", async () => {
+it("member search error renders error message on screen", async () => {
   const { user, input } = setup();
   server.use(
     rest.get(
@@ -69,13 +69,13 @@ it("constituency search error response renders error message on screen", async (
   );
 
   await user.click(input);
-  await user.keyboard("postcode{Enter}");
+  await user.keyboard("SW1A1AA{Enter}");
   expect(
     await screen.findByRole("heading", { name: /something went wrong/i })
   ).toBeVisible();
 });
 
-it("member interests search error response renders error message on screen", async () => {
+it("interests search error renders error message on screen", async () => {
   const { user, input } = setup();
   server.use(
     rest.get(
@@ -85,8 +85,40 @@ it("member interests search error response renders error message on screen", asy
   );
 
   await user.click(input);
-  await user.keyboard("postcode{Enter}");
+  await user.keyboard("SW1A1AA{Enter}");
   expect(
     await screen.findByRole("heading", { name: /something went wrong/i })
   ).toBeVisible();
+});
+
+it("submitting invalid postcode shows field error message", async () => {
+  const { user, input } = setup();
+
+  await user.click(input);
+  await user.keyboard("invalid postcode{Enter}");
+  expect(screen.getByText(/invalid postcode/i)).toBeVisible();
+});
+
+it("submitting invalid postcode after a valid search hides old results", async () => {
+  const { user, input } = setup();
+
+  await user.click(input);
+  await user.keyboard("SW1A1AA{Enter}");
+  await user.clear(input);
+  await user.click(input);
+  await user.keyboard("invalid postcode{Enter}");
+  expect(
+    screen.queryByRole("heading", { name: /^mike gapes is a landlord$/i })
+  ).not.toBeInTheDocument();
+});
+
+it("submitting valid postcode after an invalid search hides field error message", async () => {
+  const { user, input } = setup();
+
+  await user.click(input);
+  await user.keyboard("invalid postcode{Enter}");
+  await user.clear(input);
+  await user.click(input);
+  await user.keyboard("SW1A1AA{Enter}");
+  expect(screen.queryByText(/invalid postcode/i)).not.toBeInTheDocument();
 });
