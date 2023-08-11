@@ -1,5 +1,3 @@
-export const mockName = "Mike Gapes";
-
 export const mockMemberResponse = {
   items: [
     {
@@ -8,7 +6,7 @@ export const mockMemberResponse = {
           member: {
             value: {
               id: "id",
-              nameDisplayAs: mockName,
+              nameDisplayAs: "Mike Gapes",
             },
           },
         },

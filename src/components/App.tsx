@@ -1,7 +1,7 @@
 import { Button, Heading, Input, Skeleton, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import getLandlordInterests from "../utils/getLandlordStatus";
+import getLandlordInterests from "../utils/getLandlordInterests";
 
 export default function App() {
   const [currentInput, setCurrentInput] = useState("");
@@ -10,7 +10,7 @@ export default function App() {
   const {
     isInitialLoading,
     isError,
-    data: landlordInterests,
+    data: { id, name, thumbnailUrl, landlordInterests } = {},
   } = useQuery({
     queryKey: [submittedInput],
     queryFn: () => getLandlordInterests(submittedInput),
@@ -31,11 +31,13 @@ export default function App() {
       />
       <Button onClick={() => setSubmittedInput(currentInput)}>Submit</Button>
       <Skeleton isLoaded={!isInitialLoading} height="2rem">
-        {landlordInterests?.length > 0 ? <Heading>landlord</Heading> : null}
-        {landlordInterests?.length === 0 ? (
-          <Heading>not a landlord</Heading>
+        {landlordInterests?.length ? (
+          <Heading>{name} is a landlord</Heading>
         ) : null}
-        {isError ? <Heading>Invalid postcode</Heading> : null}
+        {landlordInterests?.length === 0 ? (
+          <Heading>{name} is not a landlord</Heading>
+        ) : null}
+        {isError ? <Heading>Something went wrong</Heading> : null}
       </Skeleton>
     </>
     // </Skeleton>

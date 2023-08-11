@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { mockName, mockNonLandlordInterestsResponse } from "../mocks/data";
+import { mockNonLandlordInterestsResponse } from "../mocks/data";
 import { rest, server } from "../mocks/server";
 
 const queryClient = new QueryClient({
@@ -31,58 +31,16 @@ function setup() {
   };
 }
 
-it.skip("submit button click renders name on screen", async () => {
-  const { user, input, submitButton } = setup();
-
-  await user.click(input);
-  await user.keyboard("postcode");
-  await user.click(submitButton);
-  expect(
-    await screen.findByRole("heading", {
-      name: new RegExp(mockName, "i"),
-    })
-  ).toBeVisible();
-});
-
-it.skip("enter event on input renders name on screen", async () => {
-  const { user, input } = setup();
-
-  await user.click(input);
-  await user.keyboard("postcode{Enter}");
-  expect(
-    await screen.findByRole("heading", {
-      name: new RegExp(mockName, "i"),
-    })
-  ).toBeVisible();
-});
-
-it.skip("invalid postcode value renders error message on screen", async () => {
-  const { user, input } = setup();
-  server.use(
-    rest.get(
-      "https://members-api.parliament.uk/api/Location/Constituency/Search",
-      async (_, res, ctx) => res(ctx.status(500))
-    )
-  );
-
-  await user.click(input);
-  await user.keyboard("postcode{Enter}");
-  expect(
-    await screen.findByRole("heading", { name: /invalid postcode/i })
-  ).toBeVisible();
-});
-
 it("submitting postcode for constituency with landlord member renders landlord message", async () => {
   const { user, input } = setup();
 
   await user.click(input);
   await user.keyboard("postcode{Enter}");
   expect(
-    await screen.findByRole("heading", { name: /^landlord$/i })
+    await screen.findByRole("heading", { name: /^mike gapes is a landlord$/i })
   ).toBeVisible();
 });
 
-// passes in isolation. failing due to some side effect, conflicting with test above
 it("submitting postcode for constituency with non-landlord member renders non-landlord message", async () => {
   const { user, input } = setup();
   server.use(
@@ -95,6 +53,40 @@ it("submitting postcode for constituency with non-landlord member renders non-la
   await user.click(input);
   await user.keyboard("postcode{Enter}");
   expect(
-    await screen.findByRole("heading", { name: /^not a landlord$/i })
+    await screen.findByRole("heading", {
+      name: /^mike gapes is not a landlord$/i,
+    })
+  ).toBeVisible();
+});
+
+it("constituency search error response renders error message on screen", async () => {
+  const { user, input } = setup();
+  server.use(
+    rest.get(
+      "https://members-api.parliament.uk/api/Location/Constituency/Search",
+      async (_, res, ctx) => res(ctx.status(500))
+    )
+  );
+
+  await user.click(input);
+  await user.keyboard("postcode{Enter}");
+  expect(
+    await screen.findByRole("heading", { name: /something went wrong/i })
+  ).toBeVisible();
+});
+
+it("member interests search error response renders error message on screen", async () => {
+  const { user, input } = setup();
+  server.use(
+    rest.get(
+      "https://members-api.parliament.uk/api/Members/id/RegisteredInterests",
+      async (_, res, ctx) => res(ctx.status(500))
+    )
+  );
+
+  await user.click(input);
+  await user.keyboard("postcode{Enter}");
+  expect(
+    await screen.findByRole("heading", { name: /something went wrong/i })
   ).toBeVisible();
 });
