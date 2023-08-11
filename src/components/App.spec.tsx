@@ -97,6 +97,9 @@ it("submitting invalid postcode shows field error message", async () => {
   await user.click(input);
   await user.keyboard("invalid postcode{Enter}");
   expect(screen.getByText(/invalid postcode/i)).toBeVisible();
+  expect(
+    screen.queryByRole("heading", { name: /^mike gapes is a landlord$/i })
+  ).not.toBeInTheDocument();
 });
 
 it("submitting invalid postcode after a valid search hides old results", async () => {
