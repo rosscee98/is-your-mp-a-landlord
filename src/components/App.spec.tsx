@@ -22,7 +22,7 @@ function setup() {
 
   const helpers = {
     input: screen.getByRole("textbox"),
-    submitButton: screen.getByRole("button", { name: /submit/i }),
+    submitButton: screen.getByRole("button", { name: /search/i }),
   };
 
   return {

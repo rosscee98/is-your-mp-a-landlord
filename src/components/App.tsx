@@ -1,5 +1,7 @@
 import {
+  Box,
   Button,
+  Flex,
   Heading,
   Input,
   Skeleton,
@@ -58,19 +60,33 @@ export default function App() {
   }
 
   return (
-    <>
-      <Text>Is your MP a private landlord?</Text>
-      <Text>Enter your postcode below to find out.</Text>
-      <Input
-        value={currentInput}
-        onChange={({ target: { value } }) => setCurrentInput(value)}
-        onKeyDown={({ key }) => {
-          if (key === "Enter") handleSubmit();
-        }}
-        placeholder="SW1A 1AA"
-      />
-      {showInputError ? <Text>Invalid postcode</Text> : null}
-      <Button onClick={handleSubmit}>Submit</Button>
+    <Box m="8">
+      <Heading as="h1" size="4xl" fontWeight="semibold">
+        Is your MP a <span className="text-red">private landlord</span>?
+      </Heading>
+      <Box my="6">
+        <Heading as="h2" size="lg" fontWeight="medium">
+          4% of the UK public are landlords. Among MPs, it&apos;s 14%.
+        </Heading>
+        <Heading as="h2" size="lg" fontWeight="medium">
+          Enter your postcode below and find out if your MP&apos;s one of them.
+        </Heading>
+      </Box>
+      <Flex direction="row" gap="2">
+        <Box>
+          <Input
+            value={currentInput}
+            onChange={({ target: { value } }) => setCurrentInput(value)}
+            onKeyDown={({ key }) => {
+              if (key === "Enter") handleSubmit();
+            }}
+            placeholder="SW1A 1AA"
+            size="lg"
+          />
+          {showInputError ? <Text>Invalid postcode</Text> : null}
+        </Box>
+        <Button onClick={handleSubmit}>Search</Button>
+      </Flex>
       <Skeleton isLoaded={!isInitialLoading} height="2rem">
         {!showInputError ? (
           <ResultPanel
@@ -80,7 +96,6 @@ export default function App() {
           />
         ) : null}
       </Skeleton>
-    </>
-    // </Skeleton>
+    </Box>
   );
 }
