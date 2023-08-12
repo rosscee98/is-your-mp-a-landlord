@@ -1,12 +1,16 @@
+export const mockThumbnailUrl = "https://test.com/";
+
 export const mockMemberResponse = {
   items: [
     {
       value: {
+        name: "Ilford South",
         currentRepresentation: {
           member: {
             value: {
               id: "id",
               nameDisplayAs: "Mike Gapes",
+              thumbnailUrl: mockThumbnailUrl,
             },
           },
         },

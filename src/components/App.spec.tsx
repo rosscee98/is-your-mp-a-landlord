@@ -2,7 +2,10 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { mockNonLandlordInterestsResponse } from "../mocks/data";
+import {
+  mockNonLandlordInterestsResponse,
+  mockThumbnailUrl,
+} from "../mocks/data";
 import { rest, server } from "../mocks/server";
 
 const queryClient = new QueryClient({
@@ -31,17 +34,28 @@ function setup() {
   };
 }
 
-it("submitting postcode with landlord member renders landlord message", async () => {
+it("submitting postcode with landlord member renders landlord details", async () => {
   const { user, input } = setup();
 
   await user.click(input);
   await user.keyboard("SW1A1AA{Enter}");
   expect(
-    await screen.findByRole("heading", { name: /^mike gapes is a landlord$/i })
+    await screen.findByRole("heading", {
+      name: /^landlord$/i,
+    })
   ).toBeVisible();
+  expect(
+    screen.getByRole("heading", {
+      name: /^mike gapes$/i,
+    })
+  ).toBeVisible();
+  expect(screen.getByText(/^mp for ilford south$/i)).toBeVisible();
+  expect(
+    screen.getByRole("img", { name: /headshot of mike gapes/i })
+  ).toHaveAttribute("src", mockThumbnailUrl);
 });
 
-it("submitting postcode with non-landlord member renders non-landlord message", async () => {
+it("submitting postcode with non-landlord member renders non-landlord details", async () => {
   const { user, input } = setup();
   server.use(
     rest.get(
@@ -54,9 +68,15 @@ it("submitting postcode with non-landlord member renders non-landlord message", 
   await user.keyboard("SW1A1AA{Enter}");
   expect(
     await screen.findByRole("heading", {
-      name: /^mike gapes is not a landlord$/i,
+      name: /^not a landlord$/i,
     })
   ).toBeVisible();
+  expect(
+    screen.getByRole("heading", {
+      name: /^mike gapes$/i,
+    })
+  ).toBeVisible();
+  expect(screen.getByText(/^mp for ilford south$/i)).toBeVisible();
 });
 
 it("member search error renders error message on screen", async () => {
@@ -96,10 +116,17 @@ it("submitting invalid postcode shows field error message", async () => {
 
   await user.click(input);
   await user.keyboard("invalid postcode{Enter}");
-  expect(screen.getByText(/invalid postcode/i)).toBeVisible();
+
+  const fieldError = screen.getByText(/invalid postcode/i);
+  expect(fieldError).toBeVisible();
   expect(
-    screen.queryByRole("heading", { name: /^mike gapes is a landlord$/i })
+    screen.queryByRole("heading", { name: /^mike gapes$/i })
   ).not.toBeInTheDocument();
+
+  // disappears on input change
+  await user.click(input);
+  await user.keyboard("x");
+  expect(fieldError).not.toBeInTheDocument();
 });
 
 it("submitting invalid postcode after a valid search hides old results", async () => {
@@ -111,7 +138,7 @@ it("submitting invalid postcode after a valid search hides old results", async (
   await user.click(input);
   await user.keyboard("invalid postcode{Enter}");
   expect(
-    screen.queryByRole("heading", { name: /^mike gapes is a landlord$/i })
+    screen.queryByRole("heading", { name: /^mike gapes$/i })
   ).not.toBeInTheDocument();
 });
 

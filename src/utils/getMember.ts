@@ -2,6 +2,7 @@ interface Response {
   items: [
     {
       value: {
+        name: string;
         currentRepresentation: {
           member: {
             value: {
@@ -22,14 +23,16 @@ export default async function getMember(postcode: string) {
   );
   endpoint.searchParams.append("searchText", postcode);
 
-  return await fetch(endpoint)
+  const {
+    name: constituency,
+    currentRepresentation: {
+      member: {
+        value: { id, nameDisplayAs: name, thumbnailUrl },
+      },
+    },
+  } = await fetch(endpoint)
     .then((res) => res.json())
-    .then((body: Response) => {
-      const {
-        id,
-        nameDisplayAs: name,
-        thumbnailUrl,
-      } = body.items[0].value.currentRepresentation.member.value;
-      return { id, name, thumbnailUrl };
-    });
+    .then((body: Response) => body.items[0].value);
+
+  return { name, constituency, id, thumbnailUrl };
 }
