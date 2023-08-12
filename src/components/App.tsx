@@ -9,12 +9,14 @@ import {
   Icon,
   Image,
   Input,
+  ListItem,
   Skeleton,
   Text,
+  UnorderedList,
   useBoolean,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { BiCheck, BiErrorCircle } from "react-icons/bi";
 import getLandlordInterests from "../utils/getLandlordInterests";
 
@@ -32,32 +34,76 @@ function ResultPanel({
 }) {
   if (isError) return <Heading>Something went wrong</Heading>;
 
+  const isLandlord = landlordInterests?.length;
+
   return (
-    <Box bg="white" borderRadius="2xl" py="4" px="6">
-      {landlordInterests?.length ? (
-        <Heading as="h3" size="2xl" color="red">
-          <Icon as={BiErrorCircle} />
+    <Flex
+      direction="column"
+      bg="white"
+      borderRadius="2xl"
+      py="4"
+      px="6"
+      border="3px dashed"
+      borderColor={isLandlord ? "red" : "green"}
+      gap="4"
+    >
+      {isLandlord ? (
+        <Heading as="h3" size="2xl" color="red" textDecoration="underline">
           Landlord
+          <Icon as={BiErrorCircle} />
         </Heading>
       ) : (
-        <Heading as="h3" size="2xl" color="green.500">
-          <Icon as={BiCheck} />
+        <Heading
+          as="h3"
+          size="2xl"
+          color="green.500"
+          textDecoration="underline"
+        >
           Not a landlord
+          <Icon as={BiCheck} />
         </Heading>
       )}
-      <Flex flexDirection="row">
+      <Flex flexDirection={{ base: "column", md: "row" }} gap="4">
         <Image
           src={thumbnailUrl}
           borderRadius="sm"
           alt={`Headshot of ${name}`}
-          fallback={<Suspense />}
+          fallback={<Skeleton height="240px" width="240px" />}
+          height="240px"
+          width="240px"
         />
         <Box>
           <Heading as="h4">{name}</Heading>
-          <Text>MP for {constituency}</Text>
+          <Heading as="h5" size="md">
+            MP for {constituency}
+          </Heading>
+          <Box my="2">
+            {isLandlord ? (
+              <>
+                <Text>Your MP has declared rental income.</Text>
+                <Text>
+                  They make £10,000 or more in rent annually from each of the
+                  following:
+                </Text>
+                <UnorderedList>
+                  {landlordInterests.map((interest) => (
+                    <ListItem key={interest}>&quot;{interest}&quot;</ListItem>
+                  ))}
+                </UnorderedList>
+              </>
+            ) : (
+              <>
+                <Text>They haven&apos;t declared any rental income.</Text>
+                <Text>
+                  Note: if they make under £10,000 in rental income annually,
+                  they don&apos;t have to declare it.
+                </Text>
+              </>
+            )}
+          </Box>
         </Box>
       </Flex>
-    </Box>
+    </Flex>
   );
 }
 
@@ -119,7 +165,7 @@ export default function App() {
         </FormControl>
         <Button onClick={handleSubmit}>Search</Button>
       </Flex>
-      <Skeleton isLoaded={!isInitialLoading} height="2rem">
+      <Skeleton isLoaded={!isInitialLoading} height="20rem" mt="6">
         {data && !isPostcodeError ? (
           <ResultPanel isError={isError} data={data} />
         ) : null}

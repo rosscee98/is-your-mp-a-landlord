@@ -20,7 +20,7 @@ export const theme = extendTheme({
   styles: {
     global: {
       "html, body": {
-        bg: "#eae9e0",
+        bg: "pink.100",
       },
       ".text-red": {
         color: "red",
