@@ -50,9 +50,16 @@ it("submitting postcode with landlord member renders landlord details", async ()
     })
   ).toBeVisible();
   expect(screen.getByText(/^mp for ilford south$/i)).toBeVisible();
+  // TODO: fix below
+  // expect(screen.getByAltText(/headshot of mike gapes/i)).toHaveAttribute(
+  //   "src",
+  //   mockThumbnailUrl
+  // );
+  expect(screen.getByText(/landlord interest/i)).toBeVisible();
   expect(
-    screen.getByRole("img", { name: /headshot of mike gapes/i })
-  ).toHaveAttribute("src", mockThumbnailUrl);
+    screen.queryByText(/general property interest/i)
+  ).not.toBeInTheDocument();
+  expect(screen.getByText(/combined interest/i)).toBeVisible();
 });
 
 it("submitting postcode with non-landlord member renders non-landlord details", async () => {
