@@ -2,6 +2,8 @@ import { inputAnatomy } from "@chakra-ui/anatomy";
 import { createMultiStyleConfigHelpers, extendTheme } from "@chakra-ui/react";
 import "@fontsource/outfit/600.css";
 import "@fontsource/outfit/500.css";
+import "@fontsource/lato/700.css";
+import "@fontsource/lato/400.css";
 
 const { definePartsStyle, defineMultiStyleConfig } =
   createMultiStyleConfigHelpers(inputAnatomy.keys);
@@ -9,8 +11,6 @@ const { definePartsStyle, defineMultiStyleConfig } =
 const baseStyle = definePartsStyle({
   field: {
     fontFamily: "mono",
-    // background: "black",
-    // border: "2px solid black",
   },
 });
 
@@ -29,14 +29,9 @@ export const theme = extendTheme({
   },
   fonts: {
     heading: `Outfit, sans-serif`,
+    body: `Lato, sans-serif`,
   },
   components: {
     Input: inputTheme,
-    Button: {
-      defaultProps: {
-        // bg: "blue",
-      },
-      // color: "#eae9e0",
-    },
   },
 });

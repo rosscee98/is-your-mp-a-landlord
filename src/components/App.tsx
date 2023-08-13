@@ -48,9 +48,14 @@ function ResultPanel({
       gap="4"
     >
       {isLandlord ? (
-        <Heading as="h3" size="2xl" color="red" textDecoration="underline">
-          Landlord
-          <Icon as={BiErrorCircle} />
+        <Heading
+          as="h3"
+          size="2xl"
+          color="red"
+          textDecoration="underline"
+          display="flex"
+        >
+          Landlord <Icon as={BiErrorCircle} ml="2" />
         </Heading>
       ) : (
         <Heading
@@ -58,9 +63,9 @@ function ResultPanel({
           size="2xl"
           color="green.500"
           textDecoration="underline"
+          display="flex"
         >
-          Not a landlord
-          <Icon as={BiCheck} />
+          Not a landlord <Icon as={BiCheck} />
         </Heading>
       )}
       <Flex flexDirection={{ base: "column", md: "row" }} gap="4">
@@ -68,9 +73,9 @@ function ResultPanel({
           src={thumbnailUrl}
           borderRadius="sm"
           alt={`Headshot of ${name}`}
-          fallback={<Skeleton height="240px" width="240px" />}
-          height="240px"
-          width="240px"
+          fallback={<Skeleton maxHeight="240px" maxWidth="240px" />}
+          maxHeight="240px"
+          maxWidth="240px"
         />
         <Box>
           <Heading as="h4">{name}</Heading>
@@ -95,8 +100,10 @@ function ResultPanel({
               <>
                 <Text>They haven&apos;t declared any rental income.</Text>
                 <Text>
-                  Note: if they make under £10,000 in rental income annually,
-                  they don&apos;t have to declare it.
+                  Note that MPs don&apos;t need to declare any interests that
+                  make them under £10,000 in annual rental income. This means
+                  they could still be a landlord on a smaller scale, or have
+                  multiple smaller interests.
                 </Text>
               </>
             )}
@@ -143,15 +150,14 @@ export default function App() {
       </Heading>
       <Box my="6">
         <Heading as="h2" size="lg" fontWeight="medium">
-          4% of the UK public are landlords. Among MPs, it&apos;s 14%.
-        </Heading>
-        <Heading as="h2" size="lg" fontWeight="medium">
-          Find out if your MP&apos;s one of them.
+          1 in 6 MPs are landlords. Find out if your MP&apos;s one of them.
         </Heading>
       </Box>
-      <Flex direction="row" gap="2">
-        <FormControl isRequired isInvalid={isPostcodeError}>
-          <FormLabel requiredIndicator={<></>}>Postcode</FormLabel>
+      <FormControl isRequired isInvalid={isPostcodeError}>
+        <FormLabel requiredIndicator={<></>} fontWeight="bold" size="lg">
+          Postcode
+        </FormLabel>
+        <Flex>
           <Input
             value={currentInput}
             onChange={({ target: { value } }) => handleChange(value)}
@@ -160,11 +166,15 @@ export default function App() {
             }}
             placeholder="SW1A 1AA"
             size="lg"
+            maxWidth="12rem"
+            backgroundColor="white"
           />
-          <FormErrorMessage>Invalid postcode</FormErrorMessage>
-        </FormControl>
-        <Button onClick={handleSubmit}>Search</Button>
-      </Flex>
+          <Button size="lg" ml="4" colorScheme="blue" onClick={handleSubmit}>
+            Search
+          </Button>
+        </Flex>
+        <FormErrorMessage>Invalid postcode</FormErrorMessage>
+      </FormControl>
       <Skeleton isLoaded={!isInitialLoading} height="20rem" mt="6">
         {data && !isPostcodeError ? (
           <ResultPanel isError={isError} data={data} />
