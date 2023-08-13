@@ -2,10 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  mockNonLandlordInterestsResponse,
-  mockThumbnailUrl,
-} from "../mocks/data";
+import { mockNonLandlordInterestsResponse } from "../mocks/data";
 import { rest, server } from "../mocks/server";
 
 const queryClient = new QueryClient({

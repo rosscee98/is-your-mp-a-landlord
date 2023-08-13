@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Collapse,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -84,11 +83,11 @@ export default function App() {
         <FormErrorMessage>Invalid postcode</FormErrorMessage>
       </FormControl>
       <Flex direction="column" maxWidth="50rem" gap="6">
-        <Collapse in={!isInitialLoading}>
-          {data && !isPostcodeError ? (
-            <ResultCard isError={isError} data={data} />
-          ) : null}
-        </Collapse>
+        {/* <Collapse in={!isInitialLoading}> */}
+        {data && !isPostcodeError ? (
+          <ResultCard isError={isError} data={data} />
+        ) : null}
+        {/* </Collapse> */}
         <FAQ />
       </Flex>
     </Flex>
