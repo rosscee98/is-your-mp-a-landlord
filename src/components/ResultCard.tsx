@@ -71,11 +71,11 @@ export default function ResultCard({
             <Heading as="h4" size="md">
               MP for {constituency}
             </Heading>
-            <Box my="2">
+            <Box mt="4">
               {isLandlord ? (
                 <>
-                  <Text>Your MP has declared rental income.</Text>
-                  <Text>
+                  <Text mb="2">Your MP has declared rental income.</Text>
+                  <Text mb="2">
                     They make £10,000 or more in rent annually from each of the
                     following:
                   </Text>
@@ -89,12 +89,14 @@ export default function ResultCard({
                 </>
               ) : (
                 <>
-                  <Text>They haven&apos;t declared any rental income.</Text>
+                  <Text mb="2">
+                    They haven&apos;t declared any rental income.
+                  </Text>
                   <Text>
-                    Note that MPs don&apos;t need to declare any interests that
-                    make them under £10,000 in annual rental income. This means
-                    they could still be a landlord on a smaller scale, or have
-                    multiple smaller interests.
+                    MPs don&apos;t need to declare any interests that make them
+                    under £10,000 in annual rental income. This means they could
+                    still be a landlord on a smaller scale, or have multiple
+                    smaller interests.
                   </Text>
                 </>
               )}

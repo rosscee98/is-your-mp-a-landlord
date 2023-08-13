@@ -16,9 +16,9 @@ import { FiExternalLink } from "react-icons/fi";
 export default function FAQ() {
   return (
     <Accordion allowMultiple>
-      <AccordionItem>
+      <AccordionItem mx="-2" style={{ border: "none" }}>
         <AccordionButton>
-          <Heading as="h4" size="md">
+          <Heading as="h4" size="md" textAlign="left">
             Why does it matter whether my MP is a landlord?
           </Heading>
           <AccordionIcon ml="auto" />
@@ -47,9 +47,9 @@ export default function FAQ() {
           </Text>
         </AccordionPanel>
       </AccordionItem>
-      <AccordionItem>
+      <AccordionItem mx="-2">
         <AccordionButton>
-          <Heading as="h4" size="md">
+          <Heading as="h4" size="md" textAlign="left">
             What can we do about it?
           </Heading>
           <AccordionIcon ml="auto" />
@@ -57,8 +57,8 @@ export default function FAQ() {
         <AccordionPanel>
           <Text>
             Join a tenants union! Landlords are powerful, but they&apos;re
-            nothing without the wealth they extract from their tenants. Where we
-            unite and pool our power and resources, we can – and do – win.
+            nothing without us paying off their mortgages and lifestyles. Where
+            we unite and pool our power and resources, we can – and do – win.
           </Text>
           <Text mt="4">It takes 2min to join the movement:</Text>
           <UnorderedList>

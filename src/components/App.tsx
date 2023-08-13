@@ -46,7 +46,7 @@ export default function App() {
   }
 
   return (
-    <Flex direction="column" m="8" gap="6">
+    <Flex direction="column" m={{ base: "6", md: "8" }} gap="6">
       <Heading as="h1" size="4xl" fontWeight="semibold">
         Is your MP a <span className="text-red">private landlord</span>?
       </Heading>
@@ -68,7 +68,7 @@ export default function App() {
             }}
             placeholder="SW1A 1AA"
             size="lg"
-            maxWidth="12rem"
+            maxWidth={{ base: undefined, md: "12rem" }}
             backgroundColor="white"
           />
           <Button
@@ -84,11 +84,11 @@ export default function App() {
         <FormErrorMessage>Invalid postcode</FormErrorMessage>
       </FormControl>
       <Flex direction="column" maxWidth="50rem" gap="6">
-        {/* <Collapse in={!!submittedInput && !isInitialLoading}> */}
-        {data && !isPostcodeError ? (
-          <ResultCard isError={isError} data={data} />
-        ) : null}
-        {/* </Collapse> */}
+        <Collapse in={!isInitialLoading}>
+          {data && !isPostcodeError ? (
+            <ResultCard isError={isError} data={data} />
+          ) : null}
+        </Collapse>
         <FAQ />
       </Flex>
     </Flex>
