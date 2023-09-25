@@ -42,16 +42,19 @@ export default function ResultCard({
           as="h2"
           size="2xl"
           color={isLandlord ? "red" : "green.500"}
-          textDecoration="underline"
           display="flex"
+          alignItems="center"
+          gap="2"
         >
           {isLandlord ? (
             <>
-              Landlord <Icon as={BiErrorCircle} ml="2" />
+              <Icon as={BiErrorCircle} />
+              Landlord
             </>
           ) : (
             <>
-              Not a landlord <Icon as={BiCheck} ml="2" />
+              <Icon as={BiCheck} />
+              Not a landlord
             </>
           )}
         </Heading>
@@ -81,7 +84,7 @@ export default function ResultCard({
                   </Text>
                   <UnorderedList>
                     {landlordInterests.map((interest) => (
-                      <ListItem key={interest}>
+                      <ListItem key={interest} m={{ base: "2", md: "1" }}>
                         <Code>&quot;{interest}&quot;</Code>
                       </ListItem>
                     ))}
@@ -93,10 +96,10 @@ export default function ResultCard({
                     They haven&apos;t declared any rental income.
                   </Text>
                   <Text>
-                    MPs don&apos;t need to declare any interests that make them
-                    under £10,000 in annual rental income. This means they could
-                    still be a landlord on a smaller scale, or have multiple
-                    smaller interests.
+                    Note: MPs don&apos;t need to declare any interests that make
+                    them under £10,000 in annual rental income. This means they
+                    could still be a landlord on a smaller scale, or have
+                    multiple smaller interests.
                   </Text>
                 </>
               )}
