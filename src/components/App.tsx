@@ -101,7 +101,12 @@ export default function App() {
         </Flex>
       </Flex>
       <Link href="https://www.github.com/rosscee98" ml="auto" mr="2">
-        <Icon as={BiLogoGithub} color="grey" boxSize={6} />
+        <Icon
+          as={BiLogoGithub}
+          color="grey"
+          boxSize={6}
+          title="Link to rosscee98 on Github"
+        />
       </Link>
     </Flex>
   );
