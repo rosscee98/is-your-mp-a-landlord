@@ -20,7 +20,7 @@ export default function FAQ() {
       <Flex direction="column" gap="4">
         <AccordionItem borderRadius="md" backgroundColor="#f8f1f3">
           <AccordionButton>
-            <Heading as="h4" size="md" textAlign="left" p="2">
+            <Heading as="h3" size="md" textAlign="left" p="2">
               Why does it matter whether my MP is a landlord?
             </Heading>
             <AccordionIcon ml="auto" />
@@ -51,7 +51,7 @@ export default function FAQ() {
         </AccordionItem>
         <AccordionItem borderRadius="md" backgroundColor="#f8f1f3">
           <AccordionButton>
-            <Heading as="h4" size="md" textAlign="left" p="2">
+            <Heading as="h3" size="md" textAlign="left" p="2">
               What can we do about it?
             </Heading>
             <AccordionIcon ml="auto" />
